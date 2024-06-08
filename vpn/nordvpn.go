@@ -1,6 +1,7 @@
 package vpn
 
 import (
+	"fmt"
 	"math/rand"
 	"strings"
 	"time"
@@ -34,7 +35,7 @@ func (vpn NordVPN) Connected() bool {
 // Countries returns a list of countries available for connection.
 func (vpn NordVPN) Countries() []string {
 	countries, _ := vpn.Command("countries")
-	countriesList := strings.Split(strings.Trim(countries, " "), ",")
+	countriesList := strings.Split(strings.TrimSpace(countries), ",")
 	return countriesList
 }
 
@@ -53,7 +54,7 @@ func (vpn NordVPN) RandomCountry() string {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	countries := vpn.Countries()
 	country := countries[r.Intn(len(countries))]
-	return strings.Trim(country, " ")
+	return strings.TrimSpace(country)
 }
 
 // ToggleConnection connects to a random country if not connected, otherwise disconnects.
@@ -63,4 +64,22 @@ func (vpn NordVPN) ToggleConnection() (string, error) {
 		return vpn.Connect(country)
 	}
 	return vpn.Disconnect()
+}
+
+// Help add custom commands to the NordVPN help.
+func (vpn NordVPN) Help() string {
+	const repacleAt = "Global options:"
+	nordVPNHelp, _ := vpn.Command("h")
+	wVPNHelp := fmt.Sprintf("%s\n\n%s", vpn.help(), repacleAt)
+	nordVPNHelp = strings.ReplaceAll(nordVPNHelp, "Usage: nordvpn", "Usage: wvpn")
+	nordVPNHelp = strings.ReplaceAll(nordVPNHelp, repacleAt, wVPNHelp)
+
+	lines := strings.Split(nordVPNHelp, "\n")
+	return strings.Join(lines[3:len(lines)-4], "\n")
+}
+
+func (vpn NordVPN) help() string {
+	return "\033[33mWrapped Commandss\033[0m:" + `
+     toggle, t           Connects to a random country if not connected, otherwise disconnects.
+     ip, i               Shows public IP address of the user.`
 }

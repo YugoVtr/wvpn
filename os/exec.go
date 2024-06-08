@@ -3,6 +3,7 @@ package os
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"os/exec"
 )
 
@@ -22,9 +23,9 @@ func Command(c string, args ...string) (string, error) {
 }
 
 // Print prints the output of a command and an error if it exists.
-func Print(out string, err error) {
+func Print(w io.Writer, out string, err error) {
 	if err != nil {
-		fmt.Printf("failed: %s with error %s", out, err)
+		fmt.Fprintf(w, "failed: %s with error %s", out, err)
 	}
-	fmt.Print(out)
+	fmt.Fprint(w, out)
 }

@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"wvpn/net"
-	"wvpn/os"
-	"wvpn/vpn"
+	"flag"
+	"os"
+	"wvpn/cmd"
 )
 
 func main() {
-	nordvpn := vpn.NewNordVPN(os.Command)
-	os.Print(nordvpn.ToggleConnection())
-	fmt.Printf("Your IP is %s", net.IP())
+	flag.Parse()
+	cmd.NordVPNWrapper(os.Stdout, flag.Args()...)
 }
