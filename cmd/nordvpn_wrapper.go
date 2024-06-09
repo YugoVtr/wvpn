@@ -16,6 +16,7 @@ import (
 //	toggle, t				- Toggle the connection on/off. If off connect with random server.
 //	ip, i						- Get the public IP address of the user.
 //	mesh, m					- Toggle meshnet connection on/off.
+//	peer, p					- Allow or deny all roles to a peer.
 func NordVPNWrapper(w io.Writer, args ...string) {
 	nordvpn := NewNordVPN()
 	out, err := "", error(nil)
@@ -26,6 +27,11 @@ func NordVPNWrapper(w io.Writer, args ...string) {
 		out = fmt.Sprintf("%sYour IP is %s", out, net.IP())
 	case "mesh", "m":
 		out, err = nordvpn.MeshNet().ToggleConnection()
+	case "peer", "p":
+		out, err = nordvpn.MeshNet().AllowAllToPeer(
+			Args(args).At(1),
+			Args(args).At(2) == "allow",
+		)
 	case "help", "h":
 		out = nordvpn.Help()
 	default:

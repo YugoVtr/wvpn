@@ -87,5 +87,6 @@ func (vpn NordVPN) help() string {
 	return "\033[33mWrapped Commandss\033[0m:" + `
      toggle, t           Connects to a random country if not connected, otherwise disconnects.
      ip, i               Shows public IP address of the user.
-     mesh, m             Connects to meshnet if not connected, otherwise disconnects.`
+     mesh, m             Connects to meshnet if not connected, otherwise disconnects.
+     peer, p             Allow or deny all roles to a peer.`
 }

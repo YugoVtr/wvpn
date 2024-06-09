@@ -14,7 +14,7 @@ func Command(c string, args ...string) (string, error) {
 	stdout, stderr := &bytes.Buffer{}, &bytes.Buffer{}
 	cmd.Stdout, cmd.Stderr = stdout, stderr
 	if err := cmd.Run(); err != nil {
-		return stdout.String(), fmt.Errorf("%s\n%w", stderr.String(), err)
+		return stdout.String(), fmt.Errorf("%s: %w", stderr.String(), err)
 	}
 	if stderr.Len() > 0 {
 		return stdout.String(), fmt.Errorf(stderr.String())

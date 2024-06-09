@@ -48,3 +48,19 @@ func (mesh MeshNet) ToggleConnection() (string, error) {
 	mesh.NordVPN.Command("d")
 	return mesh.Disconnect()
 }
+
+// AllowAllToPeer allows or denies all roles to a peer.
+// Roles: incoming, routing, local, fileshare, auto-accept.
+// Returns the list of peers with roles permissions.
+func (mesh MeshNet) AllowAllToPeer(peer string, allow bool) (string, error) {
+	permission, autoaccept, cmd := "deny", "disable", "peer"
+	if allow {
+		permission, autoaccept = "allow", "enable"
+	}
+	roles := []string{"incoming", "routing", "local", "fileshare"}
+	for _, role := range roles {
+		mesh.Command(cmd, role, permission, peer)
+	}
+	mesh.Command(cmd, "auto-accept", autoaccept, peer)
+	return mesh.Command(cmd, "list")
+}
