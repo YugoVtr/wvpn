@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"io"
-	"wvpn/os"
-	"wvpn/vpn"
+
+	"github.com/yugovtr/wvpn/os"
+	"github.com/yugovtr/wvpn/vpn"
 )
 
 // NordVPNWrapper encapsulates NordVPN.

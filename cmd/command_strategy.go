@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"wvpn/net"
-	"wvpn/vpn"
+
+	"github.com/yugovtr/wvpn/net"
+	"github.com/yugovtr/wvpn/vpn"
 )
 
 type Strategy func(nordvpn vpn.NordVPN, args ...string) (string, error)

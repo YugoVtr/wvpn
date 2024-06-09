@@ -1,4 +1,4 @@
-module wvpn
+module github.com/yugovtr/wvpn
 
 go 1.22.0
 

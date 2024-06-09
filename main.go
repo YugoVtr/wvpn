@@ -3,7 +3,8 @@ package main
 import (
 	"flag"
 	"os"
-	"wvpn/cmd"
+
+	"github.com/yugovtr/wvpn/cmd"
 )
 
 func main() {

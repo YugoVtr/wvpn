@@ -3,7 +3,8 @@ package cmd_test
 import (
 	"bytes"
 	"testing"
-	"wvpn/cmd"
+
+	"github.com/yugovtr/wvpn/cmd"
 
 	"github.com/stretchr/testify/assert"
 )
