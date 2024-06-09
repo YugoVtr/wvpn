@@ -39,9 +39,11 @@ func ToggleCommand(t *testing.T, toggleArgs ...string) {
 
 func HelpCommand(t *testing.T) {
 	t.Helper()
-	t.Run("help", func(t *testing.T) {
-		stdout := &bytes.Buffer{}
-		cmd.NordVPNWrapper(stdout, "help")
-		assert.Contains(t, stdout.String(), "Wrapped Commands")
-	})
+	for _, arg := range []string{"help", "h"} {
+		t.Run(arg, func(t *testing.T) {
+			stdout := &bytes.Buffer{}
+			cmd.NordVPNWrapper(stdout, arg)
+			assert.Contains(t, stdout.String(), "Wrapped Commands")
+		})
+	}
 }

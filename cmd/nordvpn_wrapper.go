@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"fmt"
 	"io"
-	"wvpn/net"
 	"wvpn/os"
 	"wvpn/vpn"
 )
@@ -20,24 +18,13 @@ import (
 func NordVPNWrapper(w io.Writer, args ...string) {
 	nordvpn := NewNordVPN()
 	out, err := "", error(nil)
-	switch Args(args).At(0) {
-	case "toggle", "t":
-		out, err = nordvpn.ToggleConnection()
-	case "ip", "i":
-		out = fmt.Sprintf("%sYour IP is %s", out, net.IP())
-	case "mesh", "m":
-		out, err = nordvpn.MeshNet().ToggleConnection()
-	case "peer", "p":
-		out, err = nordvpn.MeshNet().AllowAllToPeer(
-			Args(args).At(1),
-			Args(args).At(2) == "allow",
-		)
-	case "help", "h":
-		out = nordvpn.Help()
-	default:
-		out, err = nordvpn.Command(args...)
+	defer func() { os.Print(w, out, err) }()
+
+	if caller, ok := commands[Args(args).At(0)]; ok {
+		out, err = caller(nordvpn, args...)
+		return
 	}
-	os.Print(w, out, err)
+	out, err = nordvpn.Command(args...)
 }
 
 // NewNordVPN creates a new NordVPN instance.
