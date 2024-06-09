@@ -84,7 +84,7 @@ func (vpn NordVPN) Help() string {
 }
 
 func (vpn NordVPN) help() string {
-	return "\033[33mWrapped Commandss\033[0m:" + `
+	return "\033[33mWrapped Commands\033[0m:" + `
      toggle, t           Connects to a random country if not connected, otherwise disconnects.
      ip, i               Shows public IP address of the user.
      mesh, m             Connects to meshnet if not connected, otherwise disconnects.
