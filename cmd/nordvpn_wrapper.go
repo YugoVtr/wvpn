@@ -13,18 +13,21 @@ import (
 // Any unrecognized command is passed directly to NordVPN.
 // Commands:
 //
-//	toggle, t	- Toggle the connection on/off. If if off connect with random server.
-//	ip, i			- Get the public IP address of the user.
+//	toggle, t				- Toggle the connection on/off. If off connect with random server.
+//	ip, i						- Get the public IP address of the user.
+//	mesh, m					- Toggle meshnet connection on/off.
 func NordVPNWrapper(w io.Writer, args ...string) {
 	nordvpn := NewNordVPN()
 	out, err := "", error(nil)
 	switch Args(args).At(0) {
 	case "toggle", "t":
 		out, err = nordvpn.ToggleConnection()
-	case "help", "h":
-		out = nordvpn.Help()
 	case "ip", "i":
 		out = fmt.Sprintf("%sYour IP is %s", out, net.IP())
+	case "mesh", "m":
+		out, err = nordvpn.MeshNet().ToggleConnection()
+	case "help", "h":
+		out = nordvpn.Help()
 	default:
 		out, err = nordvpn.Command(args...)
 	}

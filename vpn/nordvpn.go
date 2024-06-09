@@ -66,6 +66,11 @@ func (vpn NordVPN) ToggleConnection() (string, error) {
 	return vpn.Disconnect()
 }
 
+// MeshNet returns a MeshNet instance.
+func (vpn NordVPN) MeshNet() MeshNet {
+	return NewMeshNet(vpn)
+}
+
 // Help add custom commands to the NordVPN help.
 func (vpn NordVPN) Help() string {
 	const repacleAt = "Global options:"
@@ -81,5 +86,6 @@ func (vpn NordVPN) Help() string {
 func (vpn NordVPN) help() string {
 	return "\033[33mWrapped Commandss\033[0m:" + `
      toggle, t           Connects to a random country if not connected, otherwise disconnects.
-     ip, i               Shows public IP address of the user.`
+     ip, i               Shows public IP address of the user.
+     mesh, m             Connects to meshnet if not connected, otherwise disconnects.`
 }
