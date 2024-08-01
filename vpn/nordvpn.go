@@ -35,7 +35,7 @@ func (vpn NordVPN) Connected() bool {
 // Countries returns a list of countries available for connection.
 func (vpn NordVPN) Countries() []string {
 	countries, _ := vpn.Command("countries")
-	countriesList := strings.Split(strings.TrimSpace(countries), ",")
+	countriesList := strings.Split(strings.TrimSpace(countries), "\n")
 	return countriesList
 }
 
